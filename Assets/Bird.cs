@@ -1,16 +1,27 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Bird : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] float jumpForce = 100.0f;
+    Rigidbody2D rigidBody;
+    InputAction jumpAction;
+    bool hasJumped = false;
+
+    void Init()
     {
-        
+        rigidBody = GetComponent<Rigidbody2D>();
+        jumpAction = InputSystem.actions.FindAction("Jump");
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        // bool hasPressedSpace = Input.GetKeyDown(KeyCode.Space);
+        bool hasPressedSpace = jumpAction.IsPressed();
+        if (!hasJumped && hasPressedSpace)
+        {
+            rigidBody.linearVelocityY = jumpForce;
+        }
+        hasJumped = hasPressedSpace;
     }
 }
