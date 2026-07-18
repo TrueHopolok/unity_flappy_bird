@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Bird : MonoBehaviour
+public class BirdInput : MonoBehaviour
 {
     // Works best with gravity scale being x2
     [SerializeField] float jumpVelocity = 8.0f;
@@ -43,12 +43,20 @@ public class Bird : MonoBehaviour
         }
     }
 
+    void OnEnable()
+    {
+        controls.Enable();
+    }
+
+    void OnDisable()
+    {
+        controls.Disable();
+    }
+
     // Destructor of the GameObject
     void OnDestroy()
     {
-        // Disable and Destory controls,
-        // Freeing the memeory
-        controls.Disable();
+        // Frees memory
         controls.Dispose();
     }
 }
