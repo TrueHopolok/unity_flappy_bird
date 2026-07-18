@@ -3,35 +3,52 @@ using UnityEngine.InputSystem;
 
 public class Bird : MonoBehaviour
 {
-    [SerializeField] float jumpForce = 1.0f;
+    // Works best with gravity scale being x2
+    [SerializeField] float jumpVelocity = 8.0f;
     Rigidbody2D rigidBody;
-    InputControlls controls;
+    InputControls controls;
     InputAction jumpAction;
-    bool hasJumped = false;
+    bool jumpRequested = false;
 
     void Awake()
     {
+        // Connecting all components
         rigidBody = GetComponent<Rigidbody2D>();
-        controls = new InputControlls();
+
+        // Initializing controls for this GameObject
+        controls = new InputControls();
         controls.Enable();
+
+        // Assigning all input actions
         jumpAction = controls.Player.Jump;
     }
 
-    void FixedUpdate()
+    // Everything is handled here including input,
+    // with sole exception of physics of course
+    void Update()
     {
-        // bool hasPressedSpace = Input.GetKeyDown(KeyCode.Space);
-        bool hasPressedSpace = jumpAction.IsPressed();
-        Debug.Log(hasPressedSpace);
-        if (!hasJumped && hasPressedSpace)
+        if (jumpAction.WasPressedThisFrame())
         {
-            rigidBody.linearVelocityY = jumpForce;
+            jumpRequested = true;
         }
-        hasJumped = hasPressedSpace;
     }
 
+    // Handles physics logic
+    void FixedUpdate()
+    {
+        if (jumpRequested)
+        {
+            rigidBody.linearVelocityY = jumpVelocity;
+            jumpRequested = false;
+        }
+    }
+
+    // Destructor of the GameObject
     void OnDestroy()
     {
+        // Disable and Destory controls,
+        // Freeing the memeory
         controls.Disable();
-        controls.Dispose();       
+        controls.Dispose();
     }
 }
