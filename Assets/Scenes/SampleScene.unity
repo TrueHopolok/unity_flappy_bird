@@ -607,6 +607,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fe077a5438b6484c983bda0039d7020, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  despawnCoordinate: -10
   deathVelocity: 30
   extraGravityForce: -100
 --- !u!1 &619394800
