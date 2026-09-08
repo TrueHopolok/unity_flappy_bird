@@ -35,7 +35,6 @@ public class BirdDeath : MonoBehaviour
         // Add extra gravity so on death bird would fall faster
         rigidBody.AddForceY(extraGravityForce);
 
-        Debug.Log(transform.position.y);
         if (transform.position.y <= despawnCoordinate)
         {
             Destroy(gameObject);
