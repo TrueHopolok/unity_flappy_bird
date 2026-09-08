@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BirdDeath : MonoBehaviour
 {
-    [SerializeField] float despawnCoordinate = -10f;
+    [SerializeField] float outOfBounds = -10f;
     [SerializeField] float deathVelocity = 20f;
     [SerializeField] float extraGravityForce = -80f;
     BirdInput birdInput;
@@ -35,7 +35,7 @@ public class BirdDeath : MonoBehaviour
         // Add extra gravity so on death bird would fall faster
         rigidBody.AddForceY(extraGravityForce);
 
-        if (transform.position.y <= despawnCoordinate)
+        if (transform.position.y <= outOfBounds)
         {
             Destroy(gameObject);
         }
